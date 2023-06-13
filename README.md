@@ -4,6 +4,7 @@
 The latest [IPCC](https://www.ipcc.ch/2022/04/04/ipcc-ar6-wgiii-pressrelease/) (International Panel on Climate Change) report clearly states that urgent climate action is needed to halve emissions by 2030. To do so, we must both drastically reduce emissions and remove legacy CO₂ emissions from the air. In order to permanently remove the CO₂ emissions we've captured, a DAC technology with CO₂ storage is combined and safely transport the isolated CO2 deep underground or reuse it in other industrial processes such as synthetic fuel production, construction materials, chemical production, sustainable agriculture and personal care products.<br>
 DAC is a system that actively extracts CO2 directly from the air, regardless of its source, and subsequently sequesters or utilizes it to prevent its release back into the atmosphere. This technology employs a combination of advanced filters, chemical processes, and renewable energy sources to capture and separate CO2 molecules from the air.<br>
 Now, since a DAC system is nowadays a little bit expensive in terms of energy consumption to work, I believe it is a good idea to place this system near places where the CO2 release is higher: near manufacturing industries (steel production, chemicals, cement, glass, and petroleum refineries for example), near a farm or fields or even near a city centre to filter transportation CO2 releases, and activate it when a certain CO2 release threshold is exceeded through smart sensors.<br>
+This project shows an IIOT (Industrial IoT) application using IoT sensors and a serverless environment to reduce costs and use an event driven approach. 
 
 
 ## Implementation details
@@ -21,8 +22,14 @@ In the end, a flask application allows the user to have a view over all those fu
 ## Architecture
 <img src="https://github.com/gaetanodigenio/DAC-IoT/blob/main/images/architettura.png" width="860" >
 
-
-
+- IoT sensors are simulated using a python function and generating random data, one measures air quality (carbon levels) and the other carbon purity
+- AWS SQS are used in order for lambda functions to retrieve and use data from the sensors
+- AWS Lambda functions are used to analyze data and performing all the computation
+- AWS Cloudwatch is used to trigger functions every 5 minutes
+- Flask is used to create the web app using python as a backend programming language
+- IFTT applet is used to send real email to the user
+- DynamoDB is used to store data permanently using non relational db 
+- AI ALGORITHM USED ??????????
 
 
 
