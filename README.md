@@ -1,13 +1,38 @@
-# DAC-IoT
-Serverless computing for IoT course project
+# DAC-IoT using serverless computing
 
-# How to install and use 
-## Prerequisites
+## Project description
+The latest [IPCC](https://www.ipcc.ch/2022/04/04/ipcc-ar6-wgiii-pressrelease/) (International Panel on Climate Change) report clearly states that urgent climate action is needed to halve emissions by 2030. To do so, we must both drastically reduce emissions and remove legacy CO₂ emissions from the air. In order to permanently remove the CO₂ emissions we've captured, a DAC technology with CO₂ storage is combined and safely transport the isolated CO2 deep underground or reuse it in other industrial processes such as synthetic fuel production, construction materials, chemical production, sustainable agriculture and personal care products.<br>
+DAC is a system that actively extracts CO2 directly from the air, regardless of its source, and subsequently sequesters or utilizes it to prevent its release back into the atmosphere. This technology employs a combination of advanced filters, chemical processes, and renewable energy sources to capture and separate CO2 molecules from the air.<br>
+Now, since a DAC system is nowadays a little bit expensive in terms of energy consumption to work, I believe it is a good idea to place this system near places where the CO2 release is higher: near manufacturing industries (steel production, chemicals, cement, glass, and petroleum refineries for example), near a farm or fields or even near a city centre to filter transportation CO2 releases, and activate it when a certain CO2 release threshold is exceeded through smart sensors.<br>
+
+
+## Implementation details
+The implementation starts placing a sensor that captures air quality levels (specifically CO2 levels) and send those information to a queue (SQS). 
+Then a lambda function is used and triggered every 5 minutes to process data in batch, controlling that when a specific threshold is excedeed then the DAC system is activated. All the data is permanently stored in a DYNAMODB table. ????? <br>
+After the DAC system succesfully have filtered the air and isolated the CO2, the latter is sent to a CO2 purity analysis machine.
+It's important to establish the purity, since based on that the packaged CO2 may be intended for a specific purpose (reused in other processes or be isolated deep underground). <br>
+Reusing it in other industrial processes actually means that it can be sold to another company that need it at a specific price, based on the quantity and the purity of it. <br>
+A second IoT sensor is then placed here to retrieve data about the purity and to send it on a SQS queue where a lambda function takes care of calculating the price based on quantity and purity of the CO2.<br>
+Furthermore, a model to forecast the future earning using past data is implemented, allowing to have an idea of how much money and quantity of CO2 can be expected in the future.<br>
+All the data here is also stored to a DYNAMODB table. <br>
+If those sensor encouters an error during the data gathering, an email is automatically sent to the client using an IFTT applet, triggered by a lambda directly linked to the SQS using a source mapping event.  
+In the end, a flask application allows the user to have a view over all those functionalities.  
+
+## Architecture
+<img src="https://github.com/gaetanodigenio/DAC-IoT/blob/main/images/architettura.png" width="860" >
+
+
+
+
+
+
+## How to install and use 
+### Prerequisites
 1. [Docker](https://www.docker.com/)
 2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 3. [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html)
 
-## Setting up the environment
+### Setting up the environment
 1. **Clone the repository**
 ```
 git clone https://github.com/gaetanodigenio/DAC-IoT.git
