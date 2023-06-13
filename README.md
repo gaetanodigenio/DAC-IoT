@@ -11,8 +11,8 @@ The latest [IPCC](https://www.ipcc.ch/2022/04/04/ipcc-ar6-wgiii-pressrelease/) (
 DAC is a system that actively extracts CO2 directly from the air, regardless of its source, and subsequently sequesters or utilizes it to prevent its release back into the atmosphere. This technology employs a combination of advanced filters, chemical processes, and renewable energy sources to capture and separate CO2 molecules from the air.<br>
 
 <img src="https://github.com/gaetanodigenio/DAC-IoT/blob/main/images/DAC.png" width="830" >
-Now, since a DAC system is nowadays a little bit expensive in terms of energy consumption to work, I believe it is a good idea to place this system near places where the CO2 release is higher: near manufacturing industries (steel production, chemicals, cement, glass, and petroleum refineries for example), near a farm or fields or even near a city centre to filter transportation CO2 releases, and activate it when a certain CO2 release threshold is exceeded through smart sensors.<br>
-This project shows an IIOT (Industrial IoT) application using IoT sensors and a serverless environment to reduce costs and use an event driven approach. 
+Now, since a DAC system is little bit expensive in terms of energy consumption to work, I believe it is a good idea to place this system near places where the CO2 release is higher instead of random places: near manufacturing industries (steel production, chemicals, cement, glass, and petroleum refineries for example), near a farm or fields or even near a city centre to filter transportation CO2 releases, and activate it when a certain CO2 release threshold is exceeded through smart sensors.<br>
+This project shows an IIOT (Industrial IoT) application using IoT sensors and a serverless environment to reduce costs and development efforts using an event driven approach. 
 
 
 ## Implementation details
