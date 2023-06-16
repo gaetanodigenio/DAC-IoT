@@ -133,7 +133,7 @@ aws lambda invoke --function-name air-carbon-analysis1 out --endpoint-url=http:/
 ```
 add a cloudwatch event to trigger the function every 5 minutes
 ```
-aws events put-rule --name air-carbon-analysis --schedule-expression 'rate(5 minutes)' --endpoint-url=http://localhost:4566
+aws events put-rule --name air-carbon-analysis1 --schedule-expression 'rate(5 minutes)' --endpoint-url=http://localhost:4566
 
 aws events list-rules --endpoint-url=http://localhost:4566
 
@@ -157,7 +157,6 @@ add a cloudwatch event to trigger the function every 5 minutes
 aws events put-rule --name air-carbon-analysis2 --schedule-expression 'rate(5 minutes)' --endpoint-url=http://localhost:4566
 
 aws events list-rules --endpoint-url=http://localhost:4566
-
 
 aws lambda add-permission --function-name air-carbon-analysis2 --statement-id air-carbon-analysis2 --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-east-2:000000000000:rule/air-carbon-analysis2 --endpoint-url=http://localhost:4566
 
