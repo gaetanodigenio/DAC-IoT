@@ -62,8 +62,8 @@ Also "-v /var/run/docker.sock:/var/run/docker.sock" is used in case in the execu
 3. **Create the SQS queues needed**
 ```
 aws sqs create-queue --queue-name errors --endpoint-url=http://localhost:4566
-aws sqs create-queue --queue-name AirQualityQueue --endpoint-url=http://localhost:4566
-aws sqs create-queue --queue-name CO2PurityQueue --endpoint-url=http://localhost:4566
+aws sqs create-queue --queue-name DAC_1 --endpoint-url=http://localhost:4566
+aws sqs create-queue --queue-name DAC_2 --endpoint-url=http://localhost:4566
 ```
 check if they have been succesfully created using
 ```
@@ -72,6 +72,7 @@ aws sqs list-queues --endpoint-url=http://localhost:4566
 
 4. **Create the DYNAMODBs and check the tables with a GUI**
 ```
+cd code/
 python3 createDBs.py
 aws dynamodb list-tables --endpoint-url=http://localhost:4566
 DYNAMO_ENDPOINT=http://0.0.0.0:4566 dynamodb-admin
@@ -120,13 +121,13 @@ aws iam create-role --role-name lambdarole --assume-role-policy-document file://
 
 aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566
 
-zip air-carbon-analysis.zip air-carbon-analysis.py config.py
+zip air-carbon-analysis1.zip air-carbon-analysis1.py config.py
 
-aws lambda create-function --function-name air-carbon-analysis --timeout 250 --zip-file fileb://air-carbon-analysis.zip --handler air-carbon-analysis.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+aws lambda create-function --function-name air-carbon-analysis1 --timeout 250 --zip-file fileb://air-carbon-analysis1.zip --handler air-carbon-analysis1.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 ```
-invoke it manually if wanted
+invoke it manually if you want
 ```
-aws lambda invoke --function-name air-carbon-analysis out --endpoint-url=http://localhost:4566
+aws lambda invoke --function-name air-carbon-analysis1 out --endpoint-url=http://localhost:4566
 ```
 add a cloudwatch event to trigger the function every 5 minutes
 ```
@@ -134,10 +135,34 @@ aws events put-rule --name air-carbon-analysis --schedule-expression 'rate(5 min
 
 aws events list-rules --endpoint-url=http://localhost:4566
 
-aws lambda add-permission --function-name air-carbon-analysis --statement-id air-carbon-analysis --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-east-2:000000000000:rule/avgFunc --endpoint-url=http://localhost:4566
+aws lambda add-permission --function-name air-carbon-analysis1 --statement-id air-carbon-analysis1 --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-east-2:000000000000:rule/air-carbon-analysis1 --endpoint-url=http://localhost:4566
 
-aws events put-targets --rule air-carbon-analysis --targets file://target.json --endpoint-url=http://localhost:4566 
+aws events put-targets --rule air-carbon-analysis1 --targets file://target.json --endpoint-url=http://localhost:4566 
 ```
+
+do the same for the air-carbon-analysis2 lambda function:
+```
+zip air-carbon-analysis2.zip air-carbon-analysis2.py config.py
+
+aws lambda create-function --function-name air-carbon-analysis2 --timeout 250 --zip-file fileb://air-carbon-analysis2.zip --handler air-carbon-analysis2.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+```
+invoke it manually if you want
+```
+aws lambda invoke --function-name air-carbon-analysis2 out --endpoint-url=http://localhost:4566
+```
+add a cloudwatch event to trigger the function every 5 minutes
+```
+aws events put-rule --name air-carbon-analysis2 --schedule-expression 'rate(5 minutes)' --endpoint-url=http://localhost:4566
+
+aws events list-rules --endpoint-url=http://localhost:4566
+
+
+aws lambda add-permission --function-name air-carbon-analysis2 --statement-id air-carbon-analysis2 --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-east-2:000000000000:rule/air-carbon-analysis2 --endpoint-url=http://localhost:4566
+
+aws events put-targets --rule air-carbon-analysis2 --targets file://target.json --endpoint-url=http://localhost:4566 
+
+```
+
 
 9. **Launch the carbon purity/quality sensor**
 ```
