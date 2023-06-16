@@ -28,11 +28,11 @@ If those sensor encouters an error during the data gathering, an email is automa
 In the end, a flask application allows the user to have a view over all those functionalities.  
 
 ## Architecture
-<img src="https://github.com/gaetanodigenio/DAC-IoT/blob/main/images/architettura.png" width="900" >
+<img src="https://github.com/gaetanodigenio/DAC-IoT/blob/main/images/Architettura.png" width="900" >
 
 - IoT sensors are simulated using a python function and generating random data, one measures air quality (carbon levels) and the other carbon purity
-- AWS SQS are used in order for lambda functions to retrieve and use data from the sensors
-- AWS Lambda functions are used to analyze data and performing all the computation
+- AWS SQS are used in order for lambda functions to retrieve and use data from the sensors, one SQS for each DAC machine
+- AWS Lambda functions are used to analyze data and performing all the computation, one lambda for each SQS to improve scalability
 - AWS Cloudwatch is used to trigger functions every 5 minutes
 - Flask is used to create the web app using python as a backend programming language
 - IFTT applet is used to send real email to the user
