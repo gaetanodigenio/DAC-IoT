@@ -164,27 +164,59 @@ aws events put-targets --rule air-carbon-analysis2 --targets file://target.json 
 ```
 
 
-9. **Launch the carbon purity/quality sensor**
+9. **Launch the CO2 purity/quality sensor**
 ```
-python3 carbon-quality-sensor.py
+python3 CO2-purity-sensors.py
 ```
 
-10. **Create the lambda function for price forecasting**
+10. **Create the lambda function for CO2-analysis1 ans CO2-analysis2**
 ```
 aws iam create-role --role-name lambdarole --assume-role-policy-document file://role_policy.json --query 'Role.Arn' --endpoint-url=http://localhost:4566
 
 aws iam put-role-policy --role-name lambdarole --policy-name lambdapolicy --policy-document file://policy.json --endpoint-url=http://localhost:4566
 
-zip priceForecasting.zip priceForecasting.py config.py
+zip CO2-analysis1.zip CO2-analysis1.py config.py
 
-aws lambda create-function --function-name priceForecasting --timeout 250 --zip-file fileb://priceForecasting.zip --handler priceForecasting.lambda_handler --runtime python3.10 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+aws lambda create-function --function-name CO2-analysis1 --timeout 250 --zip-file fileb://CO2-analysis1.zip --handler CO2-analysis1.lambda_handler --runtime python3.10 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 ```
-invoke it manually
+invoke it manually if you want
 ```
-aws lambda invoke --function-name priceForecasting out --endpoint-url=http://localhost:4566
+aws lambda invoke --function-name CO2-analysis1 out --endpoint-url=http://localhost:4566
 ```
+add a cloudwatch trigger that call the lambda every 5 minutes
+```
+aws events put-rule --name CO2-analysis1 --schedule-expression 'rate(5 minutes)' --endpoint-url=http://localhost:4566
+
+aws events list-rules --endpoint-url=http://localhost:4566
 
 
+aws lambda add-permission --function-name CO2-analysis1 --statement-id CO2-analysis1 --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-east-2:000000000000:rule/CO2-analysis1 --endpoint-url=http://localhost:4566
+
+aws events put-targets --rule CO2-analysis1 --targets file://target.json --endpoint-url=http://localhost:4566 
+```
+
+the same procedure is for CO2-analysis2:
+```
+zip CO2-analysis2.zip CO2-analysis2.py config.py
+
+aws lambda create-function --function-name CO2-analysis2 --timeout 250 --zip-file fileb://CO2-analysis2.zip --handler CO2-analysis2.lambda_handler --runtime python3.10 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
+```
+invoke it manually if you want
+```
+aws lambda invoke --function-name CO2-analysis2 out --endpoint-url=http://localhost:4566
+```
+apply a cloudwatch that triggers the lambda every 5 minutes:
+```
+aws events put-rule --name CO2-analysis2 --schedule-expression 'rate(5 minutes)' --endpoint-url=http://localhost:4566
+
+aws events list-rules --endpoint-url=http://localhost:4566
+
+
+aws lambda add-permission --function-name CO2-analysis2 --statement-id priceForecasting --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:us-east-2:000000000000:rule/CO2-analysis2 --endpoint-url=http://localhost:4566
+
+aws events put-targets --rule CO2-analysis2 --targets file://target.json --endpoint-url=http://localhost:4566 
+
+```
 
 
 
