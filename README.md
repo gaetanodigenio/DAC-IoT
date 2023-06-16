@@ -64,6 +64,8 @@ Also "-v /var/run/docker.sock:/var/run/docker.sock" is used in case in the execu
 aws sqs create-queue --queue-name errors --endpoint-url=http://localhost:4566
 aws sqs create-queue --queue-name DAC_1 --endpoint-url=http://localhost:4566
 aws sqs create-queue --queue-name DAC_2 --endpoint-url=http://localhost:4566
+aws sqs create-queue --queue-name CO2_analysis1 --endpoint-url=http://localhost:4566
+aws sqs create-queue --queue-name CO2_analysis2 --endpoint-url=http://localhost:4566
 ```
 check if they have been succesfully created using
 ```
