@@ -1,0 +1,10 @@
+[
+    {
+      "Id": "1", 
+      "Arn": "arn:aws:lambda:us-east-2:000000000000:function:air-carbon-analysis"
+    },
+    {
+      "Id": "2", 
+      "Arn": "arn:aws:lambda:us-east-2:000000000000:function:priceForecasting"
+    }
+  ]
