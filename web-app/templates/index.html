@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>DAC-IoT</title>
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="static/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper-->
+			<div id="wrapper">
+
+				<!-- Nav -->
+					<nav id="nav">
+						<a href="#" class="icon solid fa-home"><span>Home</span></a>
+						<a href="#work" class="icon solid fa-folder"><span>DAC data</span></a>
+						<a href="#work2" class="icon solid fa-folder"><span>Earnings</span></a>
+						<a href="#plot" class="icon solid fa-envelope"><span>CO2 plot</span></a>
+						<!-- <a href="https://twitter.com/ajlkn" class="icon brands fa-twitter"><span>Twitter</span></a> -->
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<!-- Home Page -->
+							<article id="home" class="panel intro">
+								<header>
+									<h1>DAC-IoT</h1><br>
+									<p>Unlocking the potential of <strong>DAC-IoT</strong>: pioneering a sustainable future through groundbreaking Green technology</p>
+								</header>
+								<a href="#work" class="jumplink pic">
+									<img src="static/images/co2.jpg" alt="" />
+								</a>
+							</article>
+
+						<!-- Data -->
+							<article id="work" class="panel">
+								<header>
+									<h2>Air quality CO2 levels monitoring data</h2>
+								</header>
+								<p>
+									Here you can see the logs of the air quality levels monitoring from the <strong>DAC with serial number 1</strong>, visualizing all the data from the database.
+								</p>
+								<section>
+									<div class="container" style="width: 100%; height: 300px; overflow-y: auto;">
+										
+										<table style="width: 100%; border-collapse: collapse;">
+											<thead style="background-color: #f2f2f2;">
+											  <tr>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">DAC Serial</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">City</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Location</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">CO2 levels</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">DAC Status</th>
+											  </tr>
+											</thead>
+
+											{% for item in items[0]['items1'] %}
+											<tbody>
+											  <tr>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['time'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['DAC_Serial'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['city'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['location'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['co2'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{% if item['DAC_status'] %}
+													ON
+												  {% else %}
+													OFF
+												  {% endif %}</td>
+											  </tr>
+
+											</tbody>
+											{% endfor %}
+										  </table>
+										  {% set co2_sum = items[0]['items1']|map(attribute='co2')|sum %}
+										{% set co2_count = items[0]['items1']|length %}
+
+										{% if co2_count > 0 %}
+											{% set co2_average = co2_sum / co2_count %}
+											<p>Average CO2 release: {{ co2_average }} ppm<br>
+												Total CO2 release: {{ co2_sum }} ppm
+											</p>
+											
+										{% else %}
+											<p>No data to calculate average</p>
+										{% endif %}
+
+									</div>
+									<button onclick="refreshPage()">Update</button>
+
+										<script>
+											function refreshPage() {
+											location.reload();
+											}
+										</script>
+								</section>
+								<p>
+									Here you can see the logs of the air quality levels monitoring from the <strong>DAC with serial number 2</strong>, visualizing all the data from the database.
+								</p>
+								<section>
+									<div class="container" style="width: 100%; height: 300px; overflow-y: auto;">
+										
+										<table style="width: 100%; border-collapse: collapse;">
+											<thead style="background-color: #f2f2f2;">
+											  <tr>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">DAC Serial</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">City</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Location</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">CO2 levels</th>
+												<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">DAC Status</th>
+											  </tr>
+											</thead>
+
+											{% for item in items[1]['items2'] %}
+											<tbody>
+											  <tr>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['time'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['DAC_Serial'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['city'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['location'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['co2'] }}</td>
+												<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{% if item['DAC_status'] %}
+													ON
+												  {% else %}
+													OFF
+												  {% endif %}</td>
+											  </tr>
+											
+											</tbody>
+											{% endfor %}
+										</table>
+										
+										{% set co2_sum = items[1]['items2']|map(attribute='co2')|sum %}
+										{% set co2_count = items[1]['items2']|length %}
+
+										{% if co2_count > 0 %}
+											{% set co2_average = co2_sum / co2_count %}
+											<p>Average CO2 release: {{ co2_average }} ppm <br>
+												Total CO2 release: {{ co2_sum }} ppm</p>
+										{% else %}
+											<p>No data to calculate average</p>
+										{% endif %}
+
+										
+									</div>
+
+									<button onclick="refreshPage()">Update</button>
+
+										<script>
+											function refreshPage() {
+											location.reload();
+											}
+										</script>
+							
+								</section>
+							</article>
+
+
+
+
+
+
+						<!-- Work2 -->
+						<article id="work2" class="panel">
+							<header>
+								<h2>CO2 purity analysis machine data and earnings</h2>
+							</header>
+							<p>
+								<strong>Machine serial number 1</strong> data and earnings:
+							</p>
+							<section>
+								<div class="container" style="width: 100%; height: 400px; overflow-y: auto;">
+									<p> <strong>Purity index 1</strong></p>
+									{% for item in items[2]['items3'] if item.get('purityIndex') == 1%}
+									<table style="width: 100%; border-collapse: collapse;">
+										<thead style="background-color: #f2f2f2;">
+										  <tr>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Machine Serial</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Purity Index</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">City</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Tons underground</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['time'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['machineSerial'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['purityIndex'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['city'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['tonsUnderground'] }}</td>
+										  </tr>
+										</tbody>
+									</table>
+									{% endfor %}
+									{% set co2_sum = items[2]['items3'] | selectattr('purityIndex', 'equalto', 1) | map(attribute='tonsUnderground') | map('float') | sum%}
+										
+										{% if co2_sum > 0 %}
+											
+											<p> Total tons of CO2 going underground: {{ co2_sum }} tons
+												
+											</p>
+										{% else %}
+											<p>No data to calculate average</p>
+										{% endif %}
+
+									
+								
+									<p> <strong>Purity index 2</strong></p>
+									{% for item in items[2]['items3'] if item.get('purityIndex') == 2 %}
+									<table style="width: 100%; border-collapse: collapse;">
+										<thead style="background-color: #f2f2f2;">
+										  <tr>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Machine Serial</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Purity Index</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">City</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Total Tons</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Total Earnings</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['time'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['machineSerial'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['purityIndex'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['city'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['totalTons'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['totalEarnings'] }}</td>
+										  </tr>
+										</tbody>
+									  </table>
+									  {% endfor %}
+									  {% set co2_sum = items[2]['items3'] | selectattr('purityIndex', 'equalto', 2) | map(attribute='totalTons') | map('float') | sum%}
+									  {% set earnings_sum = items[2]['items3'] | selectattr('purityIndex', 'equalto', 2) | map(attribute='totalEarnings') | map('float') | sum%}
+										
+									 	 {% if co2_sum > 0%}
+											
+											<p> Total tons of CO2 analyzed: {{ co2_sum }} tons<br>
+												Price/ton for purity level 2: 60$<br>
+												Total earnings: {{earnings_sum}}$
+											</p>
+										{% else %}
+											<p>No data to calculate average</p>
+										{% endif %}
+									
+
+									<p> <strong>Purity index 3</strong></p>
+									{% for item in items[2]['items3'] if item.get('purityIndex') == 3 %}
+									  <table style="width: 100%; border-collapse: collapse;">
+										<thead style="background-color: #f2f2f2;">
+										  <tr>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Machine Serial</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Purity Index</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">City</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Total Tons</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Total Earnings</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['time'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['machineSerial'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['purityIndex'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['city'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['totalTons'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['totalEarnings'] }}</td>
+										  </tr>
+										</tbody>
+									  </table>
+									  {% endfor %}
+									  {% set co2_sum = items[2]['items3'] | selectattr('purityIndex', 'equalto', 3) | map(attribute='totalTons') | map('float') | sum%}
+									  {% set earnings_sum = items[2]['items3'] | selectattr('purityIndex', 'equalto', 3) | map(attribute='totalEarnings') | map('float') | sum%}
+										
+									 	 {% if co2_sum > 0%}
+											
+											<p> Total tons of CO2 analyzed: {{ co2_sum }} tons<br>
+												Price/ton for purity level 3: 80$<br>
+												Total earnings: {{earnings_sum}}$
+											</p>
+										{% else %}
+											<p>No data to calculate average</p>
+										{% endif %}
+							</section>
+							<button onclick="refreshPage()">Update</button>
+
+										<script>
+											function refreshPage() {
+											location.reload();
+											}
+										</script>
+							<hr style="border: none; border-top: 2px solid black; margin: 20px 0;">
+							<p>
+								<strong>Machine serial number 2</strong> data and earnings:
+							</p>
+							
+							<section>
+								<div class="container" style="width: 100%; height: 400px; overflow-y: auto;">
+									<p> <strong>Purity index 1</strong></p>
+									{% for item in items[3]['items4'] if item.get('purityIndex') == 1%}
+									<table style="width: 100%; border-collapse: collapse;">
+										<thead style="background-color: #f2f2f2;">
+										  <tr>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Machine Serial</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Purity Index</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">City</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Tons underground</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['time'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['machineSerial'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['purityIndex'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['city'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['tonsUnderground'] }}</td>
+										  </tr>
+										</tbody>
+									</table>
+									{% endfor %}
+									{% set co2_sum = items[3]['items4'] | selectattr('purityIndex', 'equalto', 1) | map(attribute='tonsUnderground') | map('float') | sum%}
+										
+										{% if co2_sum > 0 %}
+											
+											<p> Total tons of CO2 analyzed: {{ co2_sum }} tons</p>
+										{% else %}
+											<p>No data to calculate average</p>
+										{% endif %}
+
+									<p> <strong>Purity index 2</strong></p>
+									{% for item in items[3]['items4'] if item.get('purityIndex') == 2%}
+									<table style="width: 100%; border-collapse: collapse;">
+										<thead style="background-color: #f2f2f2;">
+										  <tr>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Machine Serial</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Purity Index</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">City</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Total Tons</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Total Earnings</th>
+
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['time'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['machineSerial'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['purityIndex'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['city'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['totalTons'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['totalEarnings'] }}</td>
+										  </tr>
+										</tbody>
+									  </table>
+									  {% endfor %}
+									  {% set co2_sum = items[3]['items4'] | selectattr('purityIndex', 'equalto', 2) | map(attribute='totalTons') | map('float') | sum%}
+									  {% set earnings_sum = items[3]['items4'] | selectattr('purityIndex', 'equalto', 2) | map(attribute='totalEarnings') | map('float') | sum%}
+										
+									 	 {% if co2_sum > 0%}
+											
+											<p> Total tons of CO2 analyzed: {{ co2_sum }} tons<br>
+												Price/ton for purity level 2: 60$<br>
+												Total earnings: {{earnings_sum}}$
+											</p>
+										{% else %}
+											<p>No data to calculate average</p>
+										{% endif %}
+
+									<p> <strong>Purity index 3</strong></p>
+									{% for item in items[3]['items4'] if item.get('purityIndex') == 3%}
+									  <table style="width: 100%; border-collapse: collapse;">
+										<thead style="background-color: #f2f2f2;">
+										  <tr>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Machine Serial</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Purity Index</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">City</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Total Tons</th>
+											<th style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">Total Earnings</th>
+
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['time'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['machineSerial'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['purityIndex'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['city'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['totalTons'] }}</td>
+											<td style="padding: 8px; text-align: left; border-bottom: 1px solid #ddd;">{{ item['totalEarnings'] }}</td>
+										  </tr>
+										</tbody>
+									  </table>
+									  {% endfor %}
+									  {% set co2_sum = items[3]['items4'] | selectattr('purityIndex', 'equalto', 3) | map(attribute='totalTons') | map('float') | sum%}
+									  {% set earnings_sum = items[3]['items4'] | selectattr('purityIndex', 'equalto', 3) | map(attribute='totalEarnings') | map('float') | sum%}
+										
+									 	 {% if co2_sum > 0%}
+											
+											<p> Total tons of CO2 analyzed: {{ co2_sum }} tons<br>
+												Price/ton for purity level 3: 80$<br>
+												Total earnings: {{earnings_sum}}$
+											</p>
+										{% else %}
+											<p>No data to calculate average</p>
+										{% endif %}
+					
+							</section>
+							<button onclick="refreshPage()">Update</button>
+
+										<script>
+											function refreshPage() {
+											location.reload();
+											}
+										</script>
+						</article>
+
+
+
+								<!--
+								<h1>data 1</h1>
+								{% for i in range(predictions[0]| length)%}
+								<p>{{predictions[0][i]}} {{predictions[1][i]}}</p>
+
+								{% endfor%}
+
+								<h1>prediction1</h1>
+								{{predictions[2]}}
+								-->
+						
+								<article id="plot" class="panel">
+									<section>
+										<div class="container" style="width: 100%; height: 400px; overflow-y: auto;">
+											<div id="plot1"></div>
+											<button onclick="refreshPage1()">Update DAC 1</button>
+											<script>
+												function refreshPage1() {
+													location.reload();
+												}
+												
+												var dati1 = {{ predictions[0] | tojson}} ;
+												var times1 = {{ predictions[1] | tojson}};
+												var trace1 = {
+													x: times1,
+													y: dati1,
+													type: 'scatter'
+												};
+												
+												var data1 = [trace1];
+												var layout1 = {
+													title: 'CO2 release plot DAC 1',
+													xaxis: { title: 'Time' },
+													yaxis: { title: 'CO2 release' }
+												};
+												Plotly.newPlot('plot1', data1, layout1);
+											</script>
+											<p> Predicted CO2 release at time {{ predictions[6] | tojson }} : {{ predictions[2] }}</p>
+										</div>
+										
+										<div class="container" style="width: 100%; height: 400px; overflow-y: auto;">
+											<div id="plot2"></div>
+											<button onclick="refreshPage2()">Update DAC 2</button>
+											<script>
+												function refreshPage2() {
+													location.reload();
+												}
+												
+												var dati2 = {{ predictions[3] | tojson}} ;
+												var times2 = {{ predictions[4] | tojson}};
+												var trace2 = {
+													x: times2,
+													y: dati2,
+													type: 'scatter'
+												};
+												var data2 = [trace2];
+												var layout2 = {
+													title: 'CO2 release plot DAC 2',
+													xaxis: { title: 'Time' },
+													yaxis: { title: 'CO2 release' }
+												};
+												Plotly.newPlot('plot2', data2, layout2);
+											</script>
+											<p> Predicted CO2 release at time {{ predictions[7] | tojson }} : {{ predictions[5] }}</p>
+										</div>
+									</section>
+								</article>
+								
+								
+							
+
+
+
+
+
+				<!-- Footer -->
+					<div id="footer">
+						<ul class="copyright">
+							<li>&copy; DAC-IoT 2023</li>
+						</ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script>
+
+	</body>
+</html>
