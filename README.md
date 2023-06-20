@@ -17,15 +17,16 @@ This project shows an IIOT (Industrial IoT) application using IoT sensors and a 
 
 ## Implementation details
 The implementation starts placing a sensor that captures air quality levels (specifically CO2 levels) and send those information to a queue (SQS). 
-Then a lambda function is used and triggered every 5 minutes to process data in batch, controlling that when a specific threshold is excedeed then the DAC system is activated. All the data is permanently stored in a DYNAMODB table. ????? <br>
+Then a lambda function is used and triggered every 5 minutes to process data in batch, controlling that when a specific CO2 release threshold is excedeed then the DAC system is activated.   
+All the data is permanently stored in a DYNAMODB table. <br>
+Also a forecasting of the next CO2 release is calculated using a random forest regressor algorithm.<br>
 After the DAC system succesfully have filtered the air and isolated the CO2, the latter is sent to a CO2 purity analysis machine.
 It's important to establish the purity, since based on that the packaged CO2 may be intended for a specific purpose (reused in other processes or be isolated deep underground). <br>
 Reusing it in other industrial processes actually means that it can be sold to another company that need it at a specific price, based on the quantity and the purity of it. <br>
-A second IoT sensor is then placed here to retrieve data about the purity and to send it on a SQS queue where a lambda function takes care of calculating the price based on quantity and purity of the CO2.<br>
-Furthermore, a model to forecast the future earning using past data is implemented, allowing to have an idea of how much money and quantity of CO2 can be expected in the future.<br>
+A second IoT sensor is then placed here to retrieve data about the purity and to send it on a SQS queue where a lambda function takes care of calculating the price based on quantity (tons) and purity (levels 1, 2, 3 the highest the purest) of the CO2.<br>
 All the data here is also stored to a DYNAMODB table. <br>
 If those sensor encouters an error during the data gathering, an email is automatically sent to the client using an IFTT applet, triggered by a lambda directly linked to the SQS using a source mapping event.  
-In the end, a flask application allows the user to have a view over all those functionalities.  
+In the end, a flask application allows the user to have a view over all those data and plots.  
 
 ## Architecture
 <img src="https://github.com/gaetanodigenio/DAC-IoT/blob/main/images/Architettura.png" width="900" >
@@ -37,7 +38,7 @@ In the end, a flask application allows the user to have a view over all those fu
 - Flask is used to create the web app using python as a backend programming language
 - IFTT applet is used to send real email to the user
 - DynamoDB is used to store data permanently using non relational db 
-- AI ALGORITHM USED ??????????
+- AI ALGORITHM USED random forest regressor
 
 
 
@@ -219,5 +220,11 @@ aws events put-targets --rule CO2-analysis2 --targets file://target.json --endpo
 
 ```
 
+in the end, just launch the flask application using:
+```
+cd web-app/
+python3 web-app.py
+```
+then open it in a browser at the url http://127.0.0.1:8000/
 
 
