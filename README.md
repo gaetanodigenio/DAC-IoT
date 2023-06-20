@@ -128,7 +128,7 @@ zip air-carbon-analysis1.zip air-carbon-analysis1.py config.py
 
 aws lambda create-function --function-name air-carbon-analysis1 --timeout 250 --zip-file fileb://air-carbon-analysis1.zip --handler air-carbon-analysis1.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 ```
-invoke it manually if you want
+invoke it manually the first time
 ```
 aws lambda invoke --function-name air-carbon-analysis1 out --endpoint-url=http://localhost:4566
 ```
@@ -149,7 +149,7 @@ zip air-carbon-analysis2.zip air-carbon-analysis2.py config.py
 
 aws lambda create-function --function-name air-carbon-analysis2 --timeout 250 --zip-file fileb://air-carbon-analysis2.zip --handler air-carbon-analysis2.lambda_handler --runtime python3.9 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 ```
-invoke it manually if you want
+invoke it manually the first time
 ```
 aws lambda invoke --function-name air-carbon-analysis2 out --endpoint-url=http://localhost:4566
 ```
@@ -181,7 +181,7 @@ zip CO2-analysis1.zip CO2-analysis1.py config.py
 
 aws lambda create-function --function-name CO2-analysis1 --timeout 250 --zip-file fileb://CO2-analysis1.zip --handler CO2-analysis1.lambda_handler --runtime python3.10 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 ```
-invoke it manually if you want
+invoke it manually the first time
 ```
 aws lambda invoke --function-name CO2-analysis1 out --endpoint-url=http://localhost:4566
 ```
@@ -203,7 +203,7 @@ zip CO2-analysis2.zip CO2-analysis2.py config.py
 
 aws lambda create-function --function-name CO2-analysis2 --timeout 250 --zip-file fileb://CO2-analysis2.zip --handler CO2-analysis2.lambda_handler --runtime python3.10 --role arn:aws:iam::000000000000:role/lambdarole --endpoint-url=http://localhost:4566
 ```
-invoke it manually if you want
+invoke it manually the first time
 ```
 aws lambda invoke --function-name CO2-analysis2 out --endpoint-url=http://localhost:4566
 ```
