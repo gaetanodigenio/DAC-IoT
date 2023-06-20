@@ -113,7 +113,7 @@ aws lambda create-event-source-mapping --function-name sendEmail --batch-size 5 
 
 7. **Launch the air quality monitoring sensor many times**
 ```
-python3 air-quality-sensor.py
+python3 air-quality-sensors.py
 ```
 if an error is generated on the queue, an email should have been received.
 
