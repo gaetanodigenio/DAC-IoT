@@ -39,10 +39,6 @@ def lambda_handler(event, context):
                 earningsLevel3 += round((Decimal(content['tons'] * 80)), 2)
                 tonsLevel3 += round(Decimal(content['tons']), 2)
 
-    '''
-    da memorizzare nel db
-    4) stima quantità futura
-    '''
     time = datetime.datetime.now()
     #insert data on db
     item1 = {
