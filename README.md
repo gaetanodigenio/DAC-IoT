@@ -49,7 +49,7 @@ In the end, a flask application allows the user to have a view over all those da
 3. [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html)
 
 ### Setting up the environment
-1. **Clone the repository**
+1. **Clone the repository wherever you like**
 ```
 git clone https://github.com/gaetanodigenio/DAC-IoT.git
 ```
