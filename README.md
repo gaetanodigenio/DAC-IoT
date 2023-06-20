@@ -222,7 +222,7 @@ aws events put-targets --rule CO2-analysis2 --targets file://target.json --endpo
 
 in the end, just launch the flask application using:
 ```
-cd /web-app/
+cd web-app/
 python3 web-app.py
 ```
 then open it in a browser at the url http://127.0.0.1:8000/
