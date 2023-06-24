@@ -2,9 +2,9 @@
 
 ## Index
 - [Project description](#Project-description)  
-- [Implementation details](https://github.com/gaetanodigenio/DAC-IoT/blob/main/README.md#Implementation-details) 
-- [Architecture](https://github.com/gaetanodigenio/DAC-IoT/blob/main/README.md#Architecture) 
-- [How to install and use](https://github.com/gaetanodigenio/DAC-IoT/blob/main/README.md#How-to-install-and-use)
+- [Implementation details](#Implementation-details) 
+- [Architecture](#Architecture) 
+- [How to install and use](#How-to-install-and-use)
 
 ## Project description
 The latest [IPCC](https://www.ipcc.ch/2022/04/04/ipcc-ar6-wgiii-pressrelease/) (International Panel on Climate Change) report clearly states that urgent climate action is needed to halve emissions by 2030. To do so, we must both drastically reduce emissions and remove legacy CO₂ emissions from the air. In order to permanently remove the CO₂ emissions we've captured, a DAC technology with CO₂ storage is combined and safely transport the isolated CO2 deep underground or reuse it in other industrial processes such as synthetic fuel production, construction materials, chemical production, sustainable agriculture and personal care products.<br>
