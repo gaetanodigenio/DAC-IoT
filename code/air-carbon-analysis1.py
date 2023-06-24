@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     msgs = []
     previous_DAC_status = False
 
-    response = queue.receive_messages(MaxNumberOfMessages=1, WaitTimeSeconds=10, VisibilityTimeout=30)
+    response = queue.receive_messages(MaxNumberOfMessages=10, WaitTimeSeconds=10, VisibilityTimeout=30)
     if response:
         msgs.extend(response)
         for message in msgs:
