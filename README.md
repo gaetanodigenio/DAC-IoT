@@ -1,7 +1,7 @@
 # DAC-IoT using serverless computing
 
 ## Index
-- [Project description](https://github.com/gaetanodigenio/DAC-IoT/blob/main/README.md#Project-description)  
+- [Project description](#Project-description)  
 - [Implementation details](https://github.com/gaetanodigenio/DAC-IoT/blob/main/README.md#Implementation-details) 
 - [Architecture](https://github.com/gaetanodigenio/DAC-IoT/blob/main/README.md#Architecture) 
 - [How to install and use](https://github.com/gaetanodigenio/DAC-IoT/blob/main/README.md#How-to-install-and-use)
