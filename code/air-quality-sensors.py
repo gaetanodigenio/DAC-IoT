@@ -18,10 +18,10 @@ for i in range(len(config.queue_names)):
         print("error sent")
     else:
         #generate data on the DAC_serialNumber queue
-        for j in range(30):
+        for j in range(50):
             city = config.city[i]
             #generate timestamps adding 2 seconds each time
-            time = (datetime.datetime.now() + datetime.timedelta(seconds = j * 2)).strftime("%Y-%m-%d %H:%M:%S")
+            time = (datetime.datetime.now() + datetime.timedelta(seconds = j * 300)).strftime("%Y-%m-%d %H:%M:%S")
             co2 = random.randint(0, 3000)
             location = config.location[i]
             data = {
