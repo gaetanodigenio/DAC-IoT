@@ -44,11 +44,11 @@ def CO2_forecasting():
     sorted2 = sorted(response2['Items'], key=itemgetter('time'))
     data1 = [item['co2'] for item in sorted1]
     time1 = [item['time'] for item in sorted1]
-    timePrevision1 = datetime.datetime.strptime(time1[len(time1) - 1], '%Y-%m-%d %H:%M:%S') + datetime.timedelta(seconds=2)
+    timePrevision1 = datetime.datetime.strptime(time1[len(time1) - 1], '%Y-%m-%d %H:%M:%S') + datetime.timedelta(seconds=300)
 
     data2 = [item['co2'] for item in sorted2]
     time2 = [item['time'] for item in sorted2]
-    timePrevision2 = datetime.datetime.strptime(time2[len(time2) - 1], '%Y-%m-%d %H:%M:%S') + datetime.timedelta(seconds=2)
+    timePrevision2 = datetime.datetime.strptime(time2[len(time2) - 1], '%Y-%m-%d %H:%M:%S') + datetime.timedelta(seconds=300)
 
 
     # Prepare data for model training
